@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Groszery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&display=swap">
+<style>
+:root{--bg:#ECEFEA;--card:#fff;--ink:#12201A;--mute:#59665E;--line:#D3D9D4;--field:#A6B1A9;--deep:#1F4D36;--yel:#F6C945;--selbg:#1F4D36;--selfg:#fff;--ok:#1F6B43;--warn:#B3261E;--amber:#8A5A00;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1813;--card:#15241C;--ink:#EDF1EC;--mute:#A3B2A8;--line:#2A3B31;--field:#3F5448;--deep:#F6C945;--selbg:#F6C945;--selfg:#12201A;--ok:#7CCB92;--warn:#FF8B7B;--amber:#E0B252}}
+:root[data-theme="dark"]{--bg:#0E1813;--card:#15241C;--ink:#EDF1EC;--mute:#A3B2A8;--line:#2A3B31;--field:#3F5448;--deep:#F6C945;--selbg:#F6C945;--selfg:#12201A;--ok:#7CCB92;--warn:#FF8B7B;--amber:#E0B252}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 'Archivo','Segoe UI','Helvetica Neue',Arial,sans-serif;-webkit-text-size-adjust:100%}
+main{max-width:720px;margin:0 auto;padding:24px 16px 64px}
+.lk-d{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lk-l{display:none}:root:not([data-theme="light"]) .lk-d{display:block}}
+:root[data-theme="dark"] .lk-l{display:none}:root[data-theme="dark"] .lk-d{display:block}
+.brand{margin:2px 0 14px}.brand svg{display:block;max-width:100%;height:auto}
+.sub{color:var(--mute);margin:0 0 22px;max-width:56ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:22px}
+#out .card{background:transparent;border:0;border-top:2px solid var(--ink);border-radius:0;padding:14px 0 6px;margin:30px 0 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card>.grid>div:first-child{grid-column:1/-1}
+.full{grid-column:1/-1}
+label{display:block;font-size:13px;color:var(--mute);margin-bottom:5px;font-weight:600}
+input,select,textarea{width:100%;padding:10px 11px;border:1px solid var(--field);border-radius:4px;background:var(--card);color:var(--ink);font:inherit;font-size:15px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--deep);outline-offset:2px}
+textarea{min-height:64px;resize:vertical}
+#budget{font-size:34px;font-weight:800;padding:8px 12px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+button{font:inherit;font-weight:800;cursor:pointer;border:0;border-radius:4px;padding:12px 22px;background:var(--yel);color:#12201A;min-height:46px;box-shadow:0 3px 0 #12201A}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 #12201A}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--field);padding:5px 11px;font-weight:500;font-size:13px;min-height:32px;box-shadow:none}
+button.ghost:active{transform:none}
+button.sel{background:var(--selbg);color:var(--selfg);border-color:var(--selbg)}
+button:disabled{opacity:.55;cursor:wait}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 8px}
+.chip{background:var(--yel);color:#12201A;border-radius:3px;padding:1px 7px;font-size:12px;font-weight:700}
+.chip.mini{margin-left:6px;white-space:nowrap}
+h2{font-size:21px;margin:0 0 12px;color:var(--ink);font-weight:800;letter-spacing:-.01em}
+.day{border-top:1px solid var(--line);padding:12px 0}.day:first-of-type{border-top:0}
+.day>b{display:block;margin-bottom:6px;font-size:15px}
+.meal{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:5px 0}
+.meal details.mdet{border-top:0;padding:0;flex:1}
+.meal summary{font-weight:500}
+.bar{height:8px;background:var(--line);overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;background:var(--deep)}
+.bar.over i{background:var(--warn)}
+.tot{display:flex;justify-content:space-between;font-weight:800;font-size:18px;gap:10px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.bad,.err{color:var(--warn)}.ok{color:var(--ok)}.warnc{color:var(--amber)}
+.cat{margin:20px 0 4px;padding-bottom:4px;font-size:15px;font-weight:800;border-bottom:1px solid var(--ink)}
+.item{display:flex;gap:10px;align-items:center;padding:6px 0;font-size:15px;color:var(--ink);margin:0}
+.item input{width:18px;height:18px;accent-color:var(--deep);padding:0}
+.item .n{flex:1;display:flex;align-items:baseline;gap:6px}
+.item .n::after{content:"";flex:1;min-width:12px;border-bottom:1px dotted var(--field);transform:translateY(-4px)}
+.promo .item .n::after{display:none}
+.item .p{white-space:nowrap;font-variant-numeric:tabular-nums}
+.item.done .n{text-decoration:line-through;color:var(--mute)}
+details{border-top:1px solid var(--line);padding:8px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:600}
+ul,ol{margin:6px 0 4px 20px;padding:0}
+.muted{color:var(--mute);font-size:13px}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.chk{display:flex;gap:12px;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.chk:first-of-type{border-top:0}.chk span:last-child{text-align:right}
+.inline{display:flex;gap:8px}.inline input{flex:1}
+.mt{margin-top:12px}
+.banner{border:1px solid var(--warn);border-radius:4px;padding:10px 12px;margin-bottom:14px;color:var(--warn);font-size:13px}
+.banner.soft{border-color:var(--field);color:var(--ink)}
+.per{font-size:14px;font-weight:500}
+details.more{border-top:0;padding:0}details.more>summary{color:var(--deep);font-size:14px;padding:6px 0}
+.promo{border:1px dashed var(--field);border-radius:4px;padding:4px 12px}
+@media (prefers-reduced-motion:reduce){button:active{transform:none}}
+.tag{display:inline-block;background:var(--yel);color:#12201A;padding:0 8px;border-radius:3px;font-weight:800}
+.hero{display:flex;align-items:center;gap:10px}
+#budget{font-size:56px;font-weight:800;padding:0;border:0;background:transparent;width:3ch;max-width:70%;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.hero .tag{font-size:22px;padding:2px 10px}#perday{margin:2px 0 0}
+.seg-src{display:none}
+.chips .ghost{min-height:44px;padding:10px 14px;font-size:14px}
+.cta{position:sticky;bottom:0;background:var(--card);padding:12px 0 2px;margin-top:6px;z-index:2}
+.sticky{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--ink);padding:12px 0;margin-top:8px}
+.meal{border-top:1px solid var(--line);padding:10px 0}.day>b+.meal{border-top:0}
+.item{min-height:48px}.item input{width:22px;height:22px}.item{font-weight:400}.item .p{font-weight:700}
+</style>
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icons/icon-180.png"><meta name="theme-color" content="#1F4D36"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Groszery"></head>
+<body>
+<main>
+<div class="brand"><div class="lk-l"><svg width="210.6" height="46" viewBox="-40 -640 4304 940" role="img" aria-label="groszery"><g transform="translate(-144.89 -741.89) scale(9.3279)"><circle cx="50" cy="50" r="24.5" fill="none" stroke="#1F4D36" stroke-width="12"/><circle cx="50" cy="50" r="10.5" fill="#F6C945"/><path d="M74.5 32V84C74.5 97 62 102.7 44 102.7" fill="none" stroke="#1F4D36" stroke-width="12" stroke-linecap="round"/></g><path d="M1024 -560V-442H995Q928 -442 893.5 -408.0Q859 -374 859 -290V0H745V-551H859V-471Q884 -513 925.5 -536.5Q967 -560 1024 -560Z M1084 -276Q1084 -360 1121.0 -425.0Q1158 -490 1222.0 -525.0Q1286 -560 1365 -560Q1444 -560 1508.0 -525.0Q1572 -490 1609.0 -425.0Q1646 -360 1646 -276Q1646 -192 1608.0 -127.0Q1570 -62 1504.5 -26.5Q1439 9 1360 9Q1282 9 1219.0 -26.5Q1156 -62 1120.0 -126.5Q1084 -191 1084 -276ZM1529 -276Q1529 -336 1506.0 -377.5Q1483 -419 1445.0 -440.0Q1407 -461 1363 -461Q1319 -461 1281.5 -440.0Q1244 -419 1222.0 -377.5Q1200 -336 1200 -276Q1200 -187 1245.5 -138.5Q1291 -90 1360 -90Q1404 -90 1442.5 -111.0Q1481 -132 1505.0 -174.0Q1529 -216 1529 -276Z M1721 -169H1839Q1842 -134 1872.5 -110.5Q1903 -87 1949 -87Q1997 -87 2023.5 -105.5Q2050 -124 2050 -153Q2050 -184 2020.5 -199.0Q1991 -214 1927 -232Q1865 -249 1826.0 -265.0Q1787 -281 1758.5 -314.0Q1730 -347 1730 -401Q1730 -445 1756.0 -481.5Q1782 -518 1830.5 -539.0Q1879 -560 1942 -560Q2036 -560 2093.5 -512.5Q2151 -465 2155 -383H2041Q2038 -420 2011.0 -442.0Q1984 -464 1938 -464Q1893 -464 1869.0 -447.0Q1845 -430 1845 -402Q1845 -380 1861.0 -365.0Q1877 -350 1900.0 -341.5Q1923 -333 1968 -320Q2028 -304 2066.5 -287.5Q2105 -271 2133.0 -239.0Q2161 -207 2162 -154Q2162 -107 2136.0 -70.0Q2110 -33 2062.5 -12.0Q2015 9 1951 9Q1886 9 1834.5 -14.5Q1783 -38 1753.0 -78.5Q1723 -119 1721 -169Z M2378 -93H2628V0H2246V-93L2497 -458H2246V-551H2628V-458Z M3241 -233H2820Q2825 -167 2869.0 -127.0Q2913 -87 2977 -87Q3069 -87 3107 -164H3230Q3205 -88 3139.5 -39.5Q3074 9 2977 9Q2898 9 2835.5 -26.5Q2773 -62 2737.5 -126.5Q2702 -191 2702 -276Q2702 -361 2736.5 -425.5Q2771 -490 2833.5 -525.0Q2896 -560 2977 -560Q3055 -560 3116.0 -526.0Q3177 -492 3211.0 -430.5Q3245 -369 3245 -289Q3245 -258 3241 -233ZM3126 -325Q3125 -388 3081.0 -426.0Q3037 -464 2972 -464Q2913 -464 2871.0 -426.5Q2829 -389 2821 -325Z M3628 -560V-442H3599Q3532 -442 3497.5 -408.0Q3463 -374 3463 -290V0H3349V-551H3463V-471Q3488 -513 3529.5 -536.5Q3571 -560 3628 -560Z M4221 -551 3883 259H3765L3877 -9L3660 -551H3787L3942 -131L4103 -551Z" fill="#1F4D36"/></svg></div><div class="lk-d"><svg width="210.6" height="46" viewBox="-40 -640 4304 940" role="img" aria-label="groszery"><g transform="translate(-144.89 -741.89) scale(9.3279)"><circle cx="50" cy="50" r="24.5" fill="none" stroke="#FAF6EC" stroke-width="12"/><circle cx="50" cy="50" r="10.5" fill="#F6C945"/><path d="M74.5 32V84C74.5 97 62 102.7 44 102.7" fill="none" stroke="#FAF6EC" stroke-width="12" stroke-linecap="round"/></g><path d="M1024 -560V-442H995Q928 -442 893.5 -408.0Q859 -374 859 -290V0H745V-551H859V-471Q884 -513 925.5 -536.5Q967 -560 1024 -560Z M1084 -276Q1084 -360 1121.0 -425.0Q1158 -490 1222.0 -525.0Q1286 -560 1365 -560Q1444 -560 1508.0 -525.0Q1572 -490 1609.0 -425.0Q1646 -360 1646 -276Q1646 -192 1608.0 -127.0Q1570 -62 1504.5 -26.5Q1439 9 1360 9Q1282 9 1219.0 -26.5Q1156 -62 1120.0 -126.5Q1084 -191 1084 -276ZM1529 -276Q1529 -336 1506.0 -377.5Q1483 -419 1445.0 -440.0Q1407 -461 1363 -461Q1319 -461 1281.5 -440.0Q1244 -419 1222.0 -377.5Q1200 -336 1200 -276Q1200 -187 1245.5 -138.5Q1291 -90 1360 -90Q1404 -90 1442.5 -111.0Q1481 -132 1505.0 -174.0Q1529 -216 1529 -276Z M1721 -169H1839Q1842 -134 1872.5 -110.5Q1903 -87 1949 -87Q1997 -87 2023.5 -105.5Q2050 -124 2050 -153Q2050 -184 2020.5 -199.0Q1991 -214 1927 -232Q1865 -249 1826.0 -265.0Q1787 -281 1758.5 -314.0Q1730 -347 1730 -401Q1730 -445 1756.0 -481.5Q1782 -518 1830.5 -539.0Q1879 -560 1942 -560Q2036 -560 2093.5 -512.5Q2151 -465 2155 -383H2041Q2038 -420 2011.0 -442.0Q1984 -464 1938 -464Q1893 -464 1869.0 -447.0Q1845 -430 1845 -402Q1845 -380 1861.0 -365.0Q1877 -350 1900.0 -341.5Q1923 -333 1968 -320Q2028 -304 2066.5 -287.5Q2105 -271 2133.0 -239.0Q2161 -207 2162 -154Q2162 -107 2136.0 -70.0Q2110 -33 2062.5 -12.0Q2015 9 1951 9Q1886 9 1834.5 -14.5Q1783 -38 1753.0 -78.5Q1723 -119 1721 -169Z M2378 -93H2628V0H2246V-93L2497 -458H2246V-551H2628V-458Z M3241 -233H2820Q2825 -167 2869.0 -127.0Q2913 -87 2977 -87Q3069 -87 3107 -164H3230Q3205 -88 3139.5 -39.5Q3074 9 2977 9Q2898 9 2835.5 -26.5Q2773 -62 2737.5 -126.5Q2702 -191 2702 -276Q2702 -361 2736.5 -425.5Q2771 -490 2833.5 -525.0Q2896 -560 2977 -560Q3055 -560 3116.0 -526.0Q3177 -492 3211.0 -430.5Q3245 -369 3245 -289Q3245 -258 3241 -233ZM3126 -325Q3125 -388 3081.0 -426.0Q3037 -464 2972 -464Q2913 -464 2871.0 -426.5Q2829 -389 2821 -325Z M3628 -560V-442H3599Q3532 -442 3497.5 -408.0Q3463 -374 3463 -290V0H3349V-551H3463V-471Q3488 -513 3529.5 -536.5Q3571 -560 3628 -560Z M4221 -551 3883 259H3765L3877 -9L3660 -551H3787L3942 -131L4103 -551Z" fill="#FAF6EC"/></svg></div></div>
+
+<p class="sub" data-i="sub"></p>
+
+<div class="card">
+  <div class="grid">
+    <div><label for="budget" data-i="budget"></label><div class="hero"><input id="budget" type="number" min="10" step="5" value="80"><span class="tag">zł</span></div><p class="muted" id="perday"></p></div>
+    <div class="full"><label data-i="days"></label><div class="chips" id="dayc"></div><select id="days" class="seg-src"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>7</option></select></div>
+    
+    
+    <div class="full"><label data-i="diet"></label><div class="chips" id="dietc"></div><select id="diet" class="seg-src"><option value="No restrictions" data-i="d0"></option><option value="Vegetarian" data-i="d1"></option><option value="Vegan" data-i="d2"></option><option value="No pork" data-i="d3"></option></select></div>
+    <div class="full"><label for="allergies" data-i="allergies"></label><div class="chips" id="achips"></div><input id="allergies" data-p="allergiesP"></div>
+    <div class="full"><label for="pantry" data-i="pantry"></label><div class="chips" id="pchips"></div><input id="pantry" data-p="pantryP"></div>
+    <input type="checkbox" id="deals" hidden><input type="checkbox" id="plus" hidden>
+    <details class="full more"><summary data-i="more"></summary><div class="grid mt">
+      <div><label for="meals" data-i="meals"></label><select id="meals"><option value="2" data-i="m2"></option><option value="3" data-i="m3" selected></option><option value="4" data-i="m4"></option><option value="5" data-i="m5"></option></select></div>
+      
+      
+      
+      <input type="hidden" id="lang" value="Polski">
+      <div class="full"><label for="dislikes" data-i="dislikes"></label><div class="chips" id="dchips"></div><input id="dislikes" data-p="dislikesP"></div>
+      
+      
+    </div></details>
+    </div>
+<div class="cta"><button id="go" data-i="go"></button> <span id="status" class="muted"></span></div>
+<div class="muted" data-i="usage"></div>
+</div>
+
+<div id="out"></div>
+<p class="muted" data-i="disc"></p>
+<p><button id="forget" class="ghost" data-i="forget"></button></p>
+</main>
+<script>// Groszery engine v0: curated prices + recipes, deterministic planner (no AI at runtime).
+// ALL PRICES AND RECIPES ARE DRAFT: verify against receipts / by cooking before public launch.
+(function(root){
+const GROUPS={v:'Warzywa i owoce',d:'Nabiał i jajka',m:'Mięso i ryby',s:'Suche',p:'Pieczywo',c:'Puszki i mrożonki',o:'Tłuszcze'};
+// id:[name, packSize, unit, pricePerPack(PLN), group, tags]
+const PR={
+mak:['makaron',500,'g',4.5,'s','gluten'],ryz:['ryż',1000,'g',7,'s',''],pls:['płatki owsiane',500,'g',3.8,'s','gluten'],mka:['mąka pszenna',1000,'g',3.9,'s','gluten'],
+ziem:['ziemniaki',1000,'g',3.5,'v',''],jaj:['jajka',10,'szt',11.5,'d','egg'],mlk:['mleko',1000,'ml',3.9,'d','milk'],mas:['masło',200,'g',8.5,'d','milk'],
+fet:['feta',200,'g',8.5,'d','milk'],twr:['twaróg',250,'g',6.5,'d','milk'],jog:['jogurt naturalny',400,'g',3.6,'d','milk'],moz:['mozzarella',125,'g',3.8,'d','milk'],zol:['ser żółty',150,'g',7,'d','milk'],
+kur:['pierś z kurczaka',500,'g',12.5,'m','meat'],mie:['mięso mielone',500,'g',14,'m','meat pork'],tun:['tuńczyk w puszce',170,'g',7,'m','meat fish'],
+cbl:['cebula',1000,'g',3,'v',''],czn:['czosnek',10,'ząbki',1.5,'v',''],mar:['marchew',1000,'g',3,'v',''],cuk:['cukinia',1,'szt',3.5,'v',''],pap:['papryka',1,'szt',3,'v',''],
+pom:['pomidory',100,'g',1.2,'v',''],ogr:['ogórek',1,'szt',3,'v',''],bna:['banany',100,'g',0.65,'v',''],jab:['jabłka',100,'g',0.5,'v',''],
+pup:['pomidory krojone (puszka)',400,'g',3.5,'c',''],szp:['szpinak mrożony',450,'g',5.5,'c',''],bro:['brokuły mrożone',450,'g',5.5,'c',''],wmr:['warzywa mrożone',450,'g',5,'c',''],
+kuk:['kukurydza (puszka)',400,'g',3.5,'c',''],fas:['fasola czerwona (puszka)',400,'g',3.8,'c',''],cie:['ciecierzyca (puszka)',400,'g',4,'c',''],soc:['soczewica czerwona',400,'g',6,'s',''],
+chl:['chleb',500,'g',4.5,'p','gluten'],tor:['tortille',8,'szt',6,'p','gluten'],olj:['olej rzepakowy',1000,'ml',9,'o',''],mot:['masło orzechowe',350,'g',9,'s','nuts']};
+// type: b=breakfast, l=lunch/dinner, s=snack. ing: [productId, qty in product unit]
+const R=[
+['b1','Owsianka z bananem','b',10,[['pls',60],['mlk',250],['bna',120]],'Zagotuj mleko.|Wsyp płatki, gotuj 3 min.|Dodaj pokrojonego banana.'],
+['b2','Jajecznica z chlebem i pomidorem','b',10,[['jaj',3],['mas',10],['chl',80],['pom',80]],'Rozpuść masło, wbij jajka.|Mieszaj do ścięcia.|Podaj z chlebem i pomidorem.'],
+['b3','Chleb z twarogiem i ogórkiem','b',5,[['twr',125],['ogr',0.5],['chl',80]],'Rozgnieć twaróg widelcem.|Dodaj pokrojony ogórek, posól.|Podaj z chlebem.'],
+['b4','Naleśniki z twarogiem','b',25,[['mka',60],['jaj',1],['mlk',120],['twr',100],['olj',10]],'Zmiksuj mąkę, jajko i mleko.|Smaż cienkie naleśniki na oleju.|Zawiń z twarogiem.'],
+['b5','Tosty z serem i pomidorem','b',10,[['chl',80],['zol',30],['pom',80],['mas',5]],'Posmaruj chleb masłem.|Połóż ser i pomidor.|Opiekaj na patelni do roztopienia sera.'],
+['b6','Jogurt z płatkami i jabłkiem','b',5,[['jog',200],['pls',40],['jab',150]],'Pokrój jabłko.|Wymieszaj z jogurtem i płatkami.'],
+['l1','Makaron z sosem pomidorowym i mozzarellą','l',20,[['mak',100],['pup',200],['cbl',50],['czn',1],['moz',60],['olj',10]],'Ugotuj makaron.|Zeszklij cebulę, dodaj czosnek i pomidory, duś 10 min.|Wymieszaj z makaronem, dodaj mozzarellę.'],
+['l2','Makaron z cukinią i fetą','l',25,[['mak',100],['cuk',1],['fet',50],['czn',1],['olj',10]],'Ugotuj makaron.|Podsmaż cukinię z czosnkiem.|Wymieszaj z makaronem, dodaj fetę.'],
+['l3','Ryż z kurczakiem i warzywami','l',25,[['ryz',80],['kur',150],['wmr',150],['olj',10]],'Ugotuj ryż.|Podsmaż kurczaka, dodaj warzywa, duś 10 min.|Podaj z ryżem.'],
+['l4','Kurczak z ziemniakami i marchewką','l',35,[['kur',150],['ziem',250],['mar',100],['olj',10]],'Ugotuj ziemniaki i marchewkę.|Usmaż kurczaka 6 min z każdej strony.|Podaj razem.'],
+['l5','Chili z fasolą i ryżem','l',30,[['fas',200],['pup',200],['cbl',50],['kuk',100],['ryz',80],['olj',10]],'Ugotuj ryż.|Zeszklij cebulę, dodaj fasolę, kukurydzę i pomidory.|Duś 15 min, przypraw papryką.'],
+['l6','Zupa krem z soczewicy','l',30,[['soc',80],['mar',100],['cbl',50],['ziem',100],['olj',10]],'Podsmaż cebulę i marchew.|Dodaj soczewicę, ziemniaki i wodę, gotuj 20 min.|Zmiksuj.'],
+['l7','Spaghetti bolognese','l',35,[['mak',100],['mie',125],['pup',200],['cbl',50],['czn',1],['olj',10]],'Podsmaż mięso z cebulą i czosnkiem.|Dodaj pomidory, duś 20 min.|Podaj z makaronem.'],
+['l8','Makaron z tuńczykiem i kukurydzą','l',15,[['mak',100],['tun',85],['kuk',100],['cbl',30],['olj',10]],'Ugotuj makaron.|Podsmaż cebulę, dodaj tuńczyka i kukurydzę.|Wymieszaj.'],
+['l9','Szpinak z jajkiem i ziemniakami','l',30,[['szp',150],['ziem',250],['jaj',2],['czn',1],['mas',10]],'Ugotuj ziemniaki.|Podgrzej szpinak z czosnkiem.|Usmaż jajka sadzone, podaj razem.'],
+['l10','Curry z ciecierzycy z ryżem','l',30,[['cie',200],['pup',200],['cbl',50],['czn',1],['ryz',80],['olj',10]],'Ugotuj ryż.|Zeszklij cebulę, dodaj czosnek, ciecierzycę i pomidory.|Duś 15 min z curry.'],
+['l11','Tortilla z kurczakiem i papryką','l',25,[['tor',2],['kur',120],['pap',1],['jog',40],['olj',10]],'Podsmaż kurczaka z papryką.|Podgrzej tortille.|Zawiń z jogurtem.'],
+['l12','Kotlety mielone z ziemniakami i surówką','l',40,[['mie',150],['jaj',1],['ziem',250],['mar',100],['cbl',30],['olj',15]],'Wymieszaj mięso z jajkiem i cebulą, uformuj kotlety.|Smaż 5 min z każdej strony.|Ugotuj ziemniaki, zetrzyj marchew na surówkę.'],
+['l13','Makaron z brokułami i serem','l',20,[['mak',100],['bro',150],['zol',40],['czn',1],['olj',10]],'Ugotuj makaron, dorzuć brokuły na ostatnie 4 min.|Odcedź, dodaj czosnek podsmażony na oleju.|Posyp serem.'],
+['l14','Placki ziemniaczane z jogurtem','l',35,[['ziem',300],['jaj',1],['mka',30],['cbl',30],['olj',20],['jog',100]],'Zetrzyj ziemniaki i cebulę, dodaj jajko i mąkę.|Smaż małe placki na oleju.|Podaj z jogurtem.'],
+['l15','Sałatka z tuńczykiem i fasolą','l',10,[['tun',85],['fas',200],['ogr',0.5],['pom',100],['cbl',20],['chl',80],['olj',10]],'Odcedź tuńczyka i fasolę.|Pokrój warzywa, wymieszaj z olejem.|Podaj z chlebem.'],
+['l16','Zapiekanka makaronowa ze szpinakiem i fetą','l',35,[['mak',100],['szp',150],['fet',50],['jaj',1],['mlk',50]],'Ugotuj makaron, rozmroź szpinak.|Wymieszaj z fetą, jajkiem i mlekiem.|Piecz 20 min w 190°C.'],
+['s1','Banan z masłem orzechowym','s',3,[['bna',120],['mot',20]],'Pokrój banana.|Podaj z masłem orzechowym.'],
+['s2','Jogurt z jabłkiem','s',3,[['jog',150],['jab',120]],'Pokrój jabłko.|Wymieszaj z jogurtem.'],
+['s3','Kanapka z serem','s',5,[['chl',80],['zol',30],['mas',5]],'Posmaruj chleb masłem.|Połóż ser.'],
+['s4','Twaróg z pomidorem','s',3,[['twr',100],['pom',100]],'Pokrój pomidora.|Podaj z twarogiem, posól.'],
+['b7','Owsianka na wodzie z jabłkiem','b',10,[['pls',60],['jab',150]],'Zagotuj płatki z wodą.|Dodaj pokrojone jabłko.'],
+['b8','Chleb z masłem orzechowym i bananem','b',5,[['chl',80],['mot',20],['bna',100]],'Posmaruj chleb masłem orzechowym.|Dodaj plasterki banana.'],
+['b9','Jajecznica z pomidorem i ziemniakami','b',20,[['jaj',3],['pom',80],['ziem',150],['olj',10]],'Ugotuj i pokrój ziemniaki.|Podsmaż je na oleju.|Dodaj pomidora i jajka, mieszaj do ścięcia.'],
+['l17','Makaron z cukinią i pomidorami','l',20,[['mak',100],['cuk',1],['pup',200],['czn',1],['olj',10]],'Ugotuj makaron.|Podsmaż cukinię z czosnkiem, dodaj pomidory.|Duś 8 min, wymieszaj z makaronem.'],
+['s5','Marchewka i ogórek','s',3,[['mar',100],['ogr',0.5]],'Pokrój warzywa w słupki.'],
+['s6','Jabłko','s',1,[['jab',200]],'Umyj i zjedz.']];
+const SL={2:'ll',3:'bll',4:'blls',5:'bsl ls'.replace(' ','')},TN={b:'Śniadanie',l:'Obiad',s:'Przekąska'};
+const nrm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l');
+const RB={};R.forEach(r=>RB[r[0]]={id:r[0],name:r[1],type:r[2],time:r[3],ing:r[4],steps:r[5].split('|')});
+Object.values(RB).forEach(r=>{const t=new Set();r.ing.forEach(([p])=>PR[p][5].split(' ').forEach(x=>x&&t.add(x)));r.tags=t});
+const TAGW={milk:/mlek|milk|lakt|dairy|nabial/,egg:/jaj|egg/,gluten:/gluten|pszen|wheat/,fish:/ryb|fish|tun/,nuts:/orzech|orzesz|nut|peanut/};
+function pool(P){const a=nrm(P.allergies),dk=nrm(P.dislikes),dt=nrm(P.diet),ex=new Set();
+ Object.keys(TAGW).forEach(k=>{if(TAGW[k].test(a))ex.add(k)});
+ const veg=/wegetar|vegetar/.test(dt),vgn=!veg&&/wegan|vegan/.test(dt),nopork=/wieprz|pork/.test(dt);
+ const dl=dk.split(/[,;]/).map(x=>x.trim()).filter(x=>x.length>2);
+ return Object.values(RB).filter(r=>{for(const x of ex)if(r.tags.has(x))return false;
+  if((veg||vgn)&&(r.tags.has('meat')||r.tags.has('fish')))return false;if(vgn&&(r.tags.has('milk')||r.tags.has('egg')))return false;
+  if(nopork&&r.tags.has('pork'))return false;
+  if(dl.some(w=>r.ing.some(([p])=>nrm(PR[p][0]).includes(w)||w.includes(nrm(PR[p][0]).split(' ')[0].slice(0,5)))||/ryb/.test(w)&&r.tags.has('fish')))return false;return true})}
+function have(P){const t=nrm(P.pantry).split(/[,;]/).map(x=>x.trim()).filter(x=>x.length>2);return new Set(Object.keys(PR).filter(p=>t.some(w=>nrm(PR[p][0]).includes(w)||w.includes(nrm(PR[p][0]).split(' ')[0].slice(0,5)))))}
+function cart(ids,own){const m={};ids.forEach(id=>RB[id].ing.forEach(([p,q])=>{if(!own.has(p))m[p]=(m[p]||0)+q}));
+ return Object.keys(m).map(p=>{const[n,pk,u,pr,g]=PR[p],k=Math.max(1,Math.ceil(m[p]/pk-1e-9));return{p,name:n,g,need:m[p],packs:k,qty:k*pk,unit:u,price:Math.round(k*pr*100)/100}})}
+const sum=l=>Math.round(l.reduce((a,x)=>a+x.price,0)*100)/100;
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const fq=(q,u)=>(q===0.5?'½':q)+' '+u;
+function build(ids,P,own){const days=Number(P.days),sl=SL[P.meals]||SL[3],used=[...new Set(ids)];const l=cart(ids,own),tot=sum(l);
+ const gr=Object.keys(GROUPS).map(g=>({category:GROUPS[g],items:l.filter(x=>x.g===g).map(x=>({item:x.name,qty:x.p==='czn'?x.packs+' główka':x.qty+' '+x.unit,price_pln:x.price}))})).filter(c=>c.items.length);
+ let i=0;const dd=[];for(let d=1;d<=days;d++){dd.push({day:d,meals:(()=>{let c=0;return sl.split('').map(t=>({type:t==='l'?(c++?'Kolacja':'Obiad'):TN[t],recipe_id:ids[i++]}))})()})}
+ return{id:'p'+Date.now(),lang:'Polski',engine:1,summary:'Plan na '+days+' dni: '+tot.toFixed(2).replace('.',',')+' zł.',ids,
+  days:dd,recipes:used.map(id=>{const r=RB[id];return{id,name:r.name,time_min:r.time,servings:1,ingredients:r.ing.map(([p,q])=>PR[p][0]+' '+fq(q,PR[p][2])),steps:r.steps}}),
+  grocery:gr,tips:[],removed:[...own].length?[...own].map(p=>PR[p][0]):[]}}
+function plan(P,seed){const own=have(P),pl=pool(P),days=Number(P.days),sl=SL[P.meals]||SL[3],R0=rng(seed==null?Date.now():seed);
+ const by={b:pl.filter(r=>r.type==='b'),l:pl.filter(r=>r.type==='l'),s:pl.filter(r=>r.type==='s')};
+ for(const t of new Set(sl))if(!by[t].length)return{error:'Za mało przepisów dla tych ustawień (baza jest jeszcze mała).'};
+ const lim=t=>t==='l'?2:3,cost=ids=>sum(cart(ids,own)),types=[];for(let d=0;d<days;d++)for(const t of sl)types.push(t);
+ const ok=ids=>{const c={};return ids.every((id,i)=>(c[id]=(c[id]||0)+1)<=lim(types[i]))};
+ let best=null,bs=-1e9;const cheap=[];
+ for(let it=0;it<3000;it++){const ids=[],cnt={};for(const t of types){let r;for(let k=0;k<6;k++){r=by[t][Math.floor(R0()*by[t].length)];if((cnt[r.id]||0)<lim(t))break}cnt[r.id]=(cnt[r.id]||0)+1;ids.push(r.id)}
+  const c=cost(ids),u=Object.keys(cnt).length,s=c<=P.budget?1000+u*10+R0():-c;if(s>bs){bs=s;best=ids}
+  if(c>P.budget){cheap.push([c,ids]);if(cheap.length>60){cheap.sort((x,y)=>x[0]-y[0]);cheap.length=8}}}
+ if(bs<0){cheap.sort((x,y)=>x[0]-y[0]);let bc=1e9;for(const [c0,ids0] of cheap.slice(0,8)){let ids=ids0.slice(),c=c0,imp=true,n=0;
+   while(imp&&n++<10){imp=false;for(let i=0;i<ids.length;i++){for(const r of by[types[i]]){if(r.id===ids[i])continue;const t=ids.slice();t[i]=r.id;if(!ok(t))continue;const c2=cost(t);if(c2<c-0.005){ids=t;c=c2;imp=true}}}}
+   if(c<bc){bc=c;best=ids}}}
+ const out=build(best,P,own);out.pool=pl.length;out.over=out.grocery.flatMap(g=>g.items).reduce((a,x)=>a+x.price_pln,0)>P.budget;return out}
+function swap(p,P,idx,seed){const own=have(P),cur=p.ids[idx],t=RB[cur].type,R0=rng(seed==null?Date.now():seed);
+ const c=pool(P).filter(r=>r.type===t&&r.id!==cur).map(r=>{const ids=p.ids.slice();ids[idx]=r.id;return{ids,c:sum(cart(ids,own))}}).sort((a,b)=>a.c-b.c);
+ if(!c.length)return p;const ok=c.filter(x=>x.c<=P.budget),ch=(ok.length?ok:c).slice(0,3);return build(ch[Math.floor(R0()*ch.length)].ids,P,own)}
+const api={PR,RB,GROUPS,plan,swap,pool,have,cart,sum};
+if(typeof module!=='undefined')module.exports=api;else root.GrEngine=api;
+})(this);
+</script>
+<script>
+(function(){
+//LOGIC-START
+const norm=s=>String(s==null?'':s).toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const words=s=>norm(s).split(/[^a-z]+/).filter(w=>w.length>2);
+const STOP=new Set('the and or with for per each some about from into of to wage wadze luzem tsp tbsp cup cups tablespoon tablespoons teaspoon teaspoons handful half pcs szt dkg gram grams kilo litre liter garsc can cans pack packs piece pieces small medium large big chopped sliced diced fresh frozen dried ground whole optional taste pinch clove cloves slice slices bunch jar tin salt pepper oil water olive sunflower rapeseed vegetable cooking sol pieprz olej woda oliwa oliwy lyzka lyzki lyzeczka lyzeczki szklanka szklanki opakowanie puszka puszki sztuka sztuki kostka kostki maly duzy swiezy mrozony suszony mielony cala szczypta zabek zabki plasterek plasterki pek sloik'.split(' '));
+const ALIAS={peanut:['peanuts','groundnut','arachid','orzeszki','orzeszek'],nut:['nuts','almond','walnut','hazelnut','cashew','pistachio','orzech','orzechy','migdaly','laskowe','nerkowca','pistacje'],milk:['milk','dairy','lactose','mleko','mleczne','nabial','laktoza','cheese','sera','serem','twarog','mozzarella','butter','maslo','cream','smietana','yogurt','jogurt','kefir'],egg:['egg','eggs','jajko','jajka','jajek','jajecznica','omlet','omelette'],gluten:['gluten','wheat','pszenica','pszenny','maka','makaron','chleb','bread','pasta','flour','barley','jeczmien','rye','zyto','bulgur','couscous'],fish:['fish','ryba','ryby','rybny','salmon','tuna','losos','tunczyk','dorsz','cod','makrela','sledz'],shellfish:['shellfish','skorupiaki','shrimp','prawn','krewetki','krewetka','crab','krab','malze','mussels'],soy:['soy','soya','soja','tofu','sojowy','edamame'],sesame:['sesame','sezam','tahini']};
+const near=(a,b)=>{if(a.length<4||b.length<4)return false;let c=0;const m=Math.min(a.length,b.length);while(c<m&&a[c]===b[c])c++;return c>=4&&a.length-c<=3&&b.length-c<=3};
+function hit(w,c,loose){if(w===c||w===c+'s'||w===c+'es'||c===w+'s'||c===w+'es')return true;return !!loose&&(near(w,c)||near(c,w))}
+function terms(str){return String(str||'').split(/[,;\n]+/).map(s=>norm(s).trim()).filter(s=>s.length>2)}
+function expand(term,alias){const base=words(term),out=new Set(base);if(alias)for(const k in ALIAS){const g=[k].concat(ALIAS[k]);if(base.some(w=>g.some(a=>hit(w,a,false))))g.forEach(a=>out.add(a))}return Array.from(out)}
+function matches(text,list,loose,alias){const ws=words(text);return list.filter(t=>{const c=expand(t,alias);return ws.some(w=>c.some(x=>hit(w,x,loose)))})}
+const total=d=>(d.grocery||[]).reduce((s,c)=>s+(c.items||[]).reduce((a,i)=>a+(Number(i.price_pln)||0),0),0);
+function valid(d){try{if(!d||!Array.isArray(d.days)||!d.days.length||!Array.isArray(d.recipes)||!d.recipes.length||!Array.isArray(d.grocery)||!d.grocery.length)return false;const ids=new Set(d.recipes.map(r=>r.id));for(const dy of d.days){if(!Array.isArray(dy.meals)||!dy.meals.length)return false;for(const m of dy.meals)if(!ids.has(m.recipe_id))return false}for(const r of d.recipes)if(!r.name||!Array.isArray(r.ingredients))return false;for(const c of d.grocery){if(!Array.isArray(c.items))return false;for(const i of c.items)if(!i.item||!(isFinite(Number(i.price_pln))||(isFinite(Number(i.unit_price_lidl))&&isFinite(Number(i.unit_price_biedronka)))))return false}return true}catch(e){return false}}
+function listText(d){const a=[];d.grocery.forEach(c=>c.items.forEach(i=>a.push(i.item+' '+(i.qty||''))));d.recipes.forEach(r=>{a.push(r.name);(r.ingredients||[]).forEach(x=>a.push(x))});return a.join(' | ')}
+function stripPantry(d,pantry){const list=terms(pantry);const nd=JSON.parse(JSON.stringify(d));const removed=[];if(!list.length)return{d:nd,removed};nd.grocery=nd.grocery.map(c=>({category:c.category,items:c.items.filter(i=>{if(matches(i.item,list,true,false).length){removed.push(i.item);return false}return true})})).filter(c=>c.items.length);return{d:nd,removed}}
+function consistency(d,v){const gw=[];d.grocery.forEach(c=>c.items.forEach(i=>gw.push.apply(gw,words(i.item).filter(w=>!STOP.has(w)))));const have=gw.concat(terms(v.pantry).flatMap(t=>words(t)));const rw=[],missing=[],seen=new Set();
+ d.recipes.forEach(r=>(r.ingredients||[]).forEach(ing=>{const ws=words(ing).filter(w=>!STOP.has(w));rw.push.apply(rw,ws);if(!ws.length)return;const ok=ws.some(w=>have.some(h=>hit(w,h,true)));if(!ok&&!seen.has(ing)){seen.add(ing);missing.push(ing)}}));
+ const unused=[];d.grocery.forEach(c=>c.items.forEach(i=>{const ws=words(i.item).filter(w=>!STOP.has(w));if(ws.length&&!ws.some(w=>rw.some(x=>hit(w,x,true))))unused.push(i.item)}));return{missing,unused}}
+function nutrition(){return[]}
+function problems(d,v){const text=listText(d);const al=matches(text,terms(v.allergies),true,true);const di=matches(text,terms(v.dislikes),true,false).filter(x=>al.indexOf(x)<0);const c=consistency(d,v),tot=total(d);return{over:tot>v.budget+0.001?tot:0,allergens:al,dislikes:di,nutrition:nutrition(d,v),missing:c.missing,unused:c.unused}}
+const hard=p=>!!(p.over||p.allergens.length||p.dislikes.length||p.nutrition.length||p.missing.length||p.unused.length);
+function describe(p,v){const a=[];if(p.over)a.push('The total is '+p.over.toFixed(2)+' PLN but the budget is '+v.budget+' PLN: make it cheaper.');if(p.allergens.length)a.push('FORBIDDEN allergens present: '+p.allergens.join(', ')+'. Remove them and any product likely to contain them.');if(p.dislikes.length)a.push('Disliked foods present: '+p.dislikes.join(', ')+'.');if(p.nutrition.length)a.push('Nutrition out of range (target about '+v.kcal+' kcal and at least 45 g protein per person per day; kcal and protein_g must be given for every day): '+p.nutrition.join('; ')+'.');if(p.missing.length)a.push('Recipe ingredients missing from the grocery list: '+p.missing.join('; ')+'.');if(p.unused.length)a.push('Grocery items not used in any recipe (remove them or use them): '+p.unused.join('; ')+'.');return a.join(' ')}
+const DEALS={"date":"2026-10-11","items":[{"s":"L","n":"RZEŹNIK Polski kurczak – filety z piersi, XXL","p":14.99,"plus":1},{"s":"L","n":"Kiwi","p":1.49,"plus":1},{"s":"L","n":"Winogrona jasne bezpestkowe","p":9.99,"plus":1},{"s":"L","n":"Banany, luzem","p":2.99,"plus":1},{"s":"L","n":"Bataty, luzem","p":7.99,"plus":1},{"s":"L","n":"RZEŹNIK Schab wieprzowy bez kości","p":9.99,"plus":1},{"s":"L","n":"Mlekpol Ser gouda w plastrach","p":14.99,"o":29.89,"d":49},{"s":"L","n":"RZEŹNIK Polski kurczak – mięso z nogi, XXL","p":12.99,"o":21.98,"d":40},{"s":"L","n":"PIKOK Parówki z szynki, XXL","p":6.99,"o":11.39,"d":38},{"s":"L","n":"Mango dojrzałe, luzem","p":9.99,"plus":1},{"s":"L","n":"ITALIAMO Pizza quattro formaggi","p":9.99,"o":13.99,"d":28},{"s":"L","n":"ITALIAMO Sos z pomidorów koktajlowych","p":5.99},{"s":"L","n":"ITALIAMO Przecier z pomidorów wiśniowych","p":5.99},{"s":"L","n":"ITALIAMO Spody do pizzy","p":9.99},{"s":"L","n":"ITALIAMO Prosciutto cotto","p":6.99},{"s":"B","n":"Banany na wagę","p":2.99},{"s":"B","n":"Szynka wieprzowa bez kości","p":12.99},{"s":"B","n":"Winogrona jasne na wagę","p":4.99},{"s":"B","n":"Parówki z szynki Kraina Wędlin Mega Paka","p":6.69},{"s":"B","n":"Mleko UHT Łaciate 3,2%","p":2.25},{"s":"B","n":"Mleko UHT Wypasione Mlekovita 3,2%","p":2.25},{"s":"B","n":"Figa świeża","p":0.99},{"s":"B","n":"Łosoś norweski wędzony na zimno w plastrach Marinero","p":9.0},{"s":"B","n":"Kiełbasa żywiecka Kraina Wędlin","p":9.45},{"s":"B","n":"Borówki amerykańskie","p":14.99},{"s":"B","n":"Tłuszcz do smarowania Flora Original","p":7.99},{"s":"B","n":"Twaróg śmietankowy Piątnica","p":6.99},{"s":"B","n":"Parówki z szynki Sokoliki 2-pak Sokołów","p":7.99},{"s":"B","n":"Ser pleśniowy Delikate gold","p":4.49},{"s":"B","n":"Jogurt Skyr pitny wanilia Fruvita","p":2.99},{"s":"B","n":"Jogurt waniliowy Low Carb Fruvita","p":2.99},{"s":"B","n":"Jogurt o smaku jagodowym Low Carb Fruvita","p":2.99},{"s":"B","n":"Skyr bez laktozy truskawka Fruvita","p":2.99},{"s":"B","n":"Twaróg sernikowy Delikate","p":7.99},{"s":"B","n":"Protein kefir Go Active","p":4.49}]};
+function dealTokens(s){return words(s).filter(w=>!STOP.has(w))}
+function findDeal(name,store,hasPlus,items){const tk=dealTokens(name);if(!tk.length)return null;let best=null;for(const d of items){if(d.s!==store)continue;if(d.plus&&!hasPlus)continue;const dt=words(d.n);if(tk.every(t=>dt.some(w=>hit(t,w,true)||hit(w,t,true)))){if(!best||d.p<best.p)best=d}}return best}
+const r2=x=>Math.round(x*100)/100;
+function applyShops(d,v,deals){const nd=JSON.parse(JSON.stringify(d));let tl=0,tb=0,dl=0,db=0;
+ nd.grocery.forEach(c=>c.items.forEach(i=>{
+  const u0=Number(i.units),units=isFinite(u0)&&u0>0?u0:1;const base=Number(i.price_pln);
+  let pl=Number(i.unit_price_lidl),pb=Number(i.unit_price_biedronka);
+  const fb=isFinite(base)&&base>=0?base/units:0;
+  if(!isFinite(pl)||pl<0)pl=isFinite(pb)&&pb>=0?pb:fb;
+  if(!isFinite(pb)||pb<0)pb=pl;
+  const L=findDeal(i.item,'L',!!v.plus,deals.items),B=findDeal(i.item,'B',!!v.plus,deals.items);
+  if(L){pl=L.p;dl++}if(B){pb=B.p;db++}
+  i.units=units;i.unit_price_lidl=r2(pl);i.unit_price_biedronka=r2(pb);
+  i.price_lidl=r2(pl*units);i.price_biedronka=r2(pb*units);
+  i.deal_lidl=L?{n:L.n,o:L.o||null,d:L.d||null,plus:!!L.plus}:null;i.deal_biedronka=B?{n:B.n,o:null,d:null,plus:false}:null;
+  tl+=i.price_lidl;tb+=i.price_biedronka}));
+ const chosen=tl<=tb?'L':'B';
+ nd.grocery.forEach(c=>c.items.forEach(i=>{i.price_pln=chosen==='L'?i.price_lidl:i.price_biedronka;i.deal=chosen==='L'?i.deal_lidl:i.deal_biedronka}));
+ nd.shop={chosen:chosen==='L'?'Lidl':'Biedronka',lidl:r2(tl),biedronka:r2(tb),saving:r2(Math.abs(tl-tb)),dealsL:dl,dealsB:db,date:deals.date||null};
+ return nd}
+function dealsBlock(v,deals){const f=s=>deals.items.filter(d=>d.s===s&&(!d.plus||v.plus)).map(d=>'- '+d.n+': '+d.p.toFixed(2)+' PLN'+(d.o?' (was '+d.o.toFixed(2)+')':'')).join('\n');
+ return 'THIS WEEK DISCOUNTS (snapshot '+deals.date+'; each price applies to one pack, one piece or one kg; "na wage" and "luzem" mean per kg).\nLIDL:\n'+f('L')+'\nBIEDRONKA:\n'+f('B')+'\nBuild the menu around these discounted products where it makes sense (cheap, filling, varied; never force odd combinations). When you buy a product from this list, write its name exactly as in the list, keeping the Polish name. For EVERY grocery item give units (a number: packs, pieces, kg or litres you buy), unit_price_lidl and unit_price_biedronka (PLN per unit): use the list price for a chain when the product is listed for that chain, otherwise your best estimate of the normal price of a comparable product at that chain. Never invent a discount. The budget applies to the total at the cheaper of the two chains.'}
+//LOGIC-END
+
+const $=id=>document.getElementById(id);
+function el(t,a,...k){const e=document.createElement(t);if(a)for(const x in a){if(x==='class')e.className=a[x];else e.setAttribute(x,a[x])}for(const c of k.flat()){if(c==null)continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}return e}
+const fmt=n=>(Math.round(n*100)/100).toFixed(2).replace('.',',')+' zł';
+const D={en:{title:'Groszery: meal planner for your budget',c1:'menu',c2:'list',c3:'budget',more:'More options (meals per day, cooking time, dislikes)',sub:'Eat well, spend less. Tell us your budget and tastes: you get a few days of meals, simple recipes and one shopping list that fits.',budget:'Budget for the whole plan (PLN)',days:'Number of days',people:'People eating',meals:'Meals per day',m2:'2 (lunch, dinner)',m3:'3 (breakfast, lunch, dinner)',m4:'4 (+ a snack)',m5:'5 (+ 2 snacks)',kcal:'Calories per person per day (rough)',time:'Max cooking time per meal',diet:'Diet',d0:'No restrictions',d1:'Vegetarian',d2:'Vegan',d3:'No pork',allergies:'Allergies (strict, never included)',allergiesP:'e.g. peanuts, milk',dislikes:'Dislikes (optional)',dislikesP:'e.g. mushrooms, olives',likes:'Foods you like or want to use up (optional)',likesP:'e.g. rice, eggs, chicken',pantry:'What do you already have at home? Tap or type (we will not put it on the list)',pantryP:'e.g. rice, flour, olive oil',pq:'eggs,rice,pasta,flour,oil,onion,garlic,potatoes',aq:'peanuts,nuts,milk,eggs,gluten,soy,fish,shellfish,sesame',dq:'mushrooms,olives,onion,fish,tomatoes,cilantro,broccoli,beets',style:'Cooking style',batch:'Batch cook, reuse leftovers',fresh:'Cook fresh each time',lang:'Language',go:'Plan my week',stop:'Stop',usage:'Each plan uses 1-2 requests from your own Claude usage and can take 1-2 minutes.',s1:'Planning meals and prices…',s2:'Checking the plan and fixing problems…',s3:'Updating your plan…',plan:'Your plan',est:'Estimated total: ',left:' left',over:'Over budget by ',menu:'Menu',shop:'Shopping list',copy:'Copy list',copied:'Copied',cfail:'Copy failed',recipes:'Recipes',ing:'Ingredients',steps:'Steps',tips:'Money-saving tips',port:'Portions: ',ticked:'Checked ',of:' of ',totalL:'Total ',perday:'About ',perday2:' zł per day',swap:'Swap',cheaper:'Make it cheaper',changeP:'Change something: "I already have pasta", "no fish on day 2"…',apply:'Apply',fresh2:'Start over',chk:'Automatic checks',cBud:'Budget',cAll:'Allergies and excluded foods',cNut:'Nutrition (rough estimate)',cLst:'Shopping list matches recipes',cPan:'Left off the list (already at home)',found:'Found: ',outr:'Out of range: ',miss:'Possibly missing: ',unus:'Not used in recipes: ',warnAll:'Allergies: AI can make mistakes and these checks only compare words. Always read product labels. For a serious allergy, do not rely on this app.',fbT:'Help us test this app',fbQ:'Was this plan useful?',fbC:'What was wrong or missing?',paid:'Receipt total if you bought it (PLN)',savef:'Save receipt',savedf:'Saved. ',offBy:'The estimate was off by ',offUp:' (real cost higher)',offDn:' (real cost lower)',copyFb:'Copy feedback to send to the creator',fbCopied:'Copied. Paste it in a message to the creator.',langB:'This plan is in another language.',tr:'Translate plan',forget:'Forget saved data on this device',forgot:'Saved data deleted.',disc:'Prices are estimates for typical discount supermarkets in Poland, not live prices. Not nutrition or medical advice.',e0:'Enter a budget of at least 10 PLN.',e1:'This planner needs to be opened inside Claude to work.',e2:'Permission was not granted.',e3:'Too many requests. Wait a moment and try again.',e4:'Could not create a valid plan. Press the button to try again.',e5:'Could not apply the change. Your previous plan is unchanged.',e6:'Cancelled.',min:'min',dayW:'Day',dealsOn:'Plan around this week discounts at Lidl and Biedronka',plusOn:'I have the Lidl Plus app (more discounts)',shopT:'Where to shop',shopBest:'Cheapest: ',shopSame:'Both shops cost about the same',shopS1:'You save about ',shopS2:' zł compared with ',shopDeals:'Discounted items on your list: ',snap1:'Discount data: snapshot from ',snap2:' (Lidl and Biedronka flyers via blix.pl, unofficial). Offer dates are not known, so check in the shop. Prices of other products are estimates.',badge:'deal',cDeal:'Discounts',perMeal:'About ',perMeal2:' zł per meal · ',perDay:' zł per day',share:'Share list',shared:'Copied'},
+pl:{title:'Groszery: plan posiłków na Twój budżet',c1:'menu',c2:'lista',c3:'budżet',more:'Więcej opcji (posiłki dziennie, czas gotowania, czego nie lubisz)',sub:'Jedz dobrze, wydawaj mniej. Podaj budżet i upodobania, a dostaniesz kilka dni posiłków, proste przepisy i jedną listę zakupów.',budget:'Budżet na cały plan (PLN)',days:'Liczba dni',people:'Liczba osób',meals:'Posiłki dziennie',m2:'2 (obiad, kolacja)',m3:'3 (śniadanie, obiad, kolacja)',m4:'4 (+ przekąska)',m5:'5 (+ 2 przekąski)',kcal:'Kalorie na osobę dziennie (orientacyjnie)',time:'Maks. czas gotowania posiłku',diet:'Dieta',d0:'Bez ograniczeń',d1:'Wegetariańska',d2:'Wegańska',d3:'Bez wieprzowiny',allergies:'Alergie (ścisłe, nigdy nie używane)',allergiesP:'np. orzeszki ziemne, mleko',dislikes:'Czego nie lubisz (opcjonalnie)',dislikesP:'np. pieczarki, oliwki',likes:'Co lubisz lub chcesz zużyć (opcjonalnie)',likesP:'np. ryż, jajka, kurczak',pantry:'Co już masz w domu? Kliknij lub wpisz (nie dodamy tego do listy)',pantryP:'np. ryż, mąka, oliwa',pq:'jajka,ryż,makaron,mąka,olej,cebula,czosnek,ziemniaki',aq:'orzeszki ziemne,orzechy,mleko,jajka,gluten,soja,ryby,skorupiaki,sezam',dq:'pieczarki,oliwki,cebula,ryby,pomidory,kolendra,brokuły,buraki',style:'Styl gotowania',batch:'Gotuję na zapas, wykorzystuję resztki',fresh:'Gotuję świeże za każdym razem',lang:'Język',go:'Zaplanuj mój tydzień',stop:'Stop',usage:'Plan powstaje w kilka sekund z przepisów i cen zebranych w Groszery. Ceny są szacunkowe.',s1:'Planuję posiłki i ceny…',s2:'Sprawdzam plan i poprawiam błędy…',s3:'Aktualizuję plan…',plan:'Twój plan',est:'Szacowany koszt: ',left:' zostaje',over:'Przekroczenie budżetu o ',menu:'Jadłospis',shop:'Lista zakupów',copy:'Kopiuj listę',copied:'Skopiowano',cfail:'Nie udało się',recipes:'Przepisy',ing:'Składniki',steps:'Kroki',tips:'Jak oszczędzać',port:'Porcji: ',ticked:'Odhaczone ',of:' z ',totalL:'Razem ',perday:'To około ',perday2:' zł dziennie',swap:'Zmień',cheaper:'Zrób taniej',changeP:'Zmień coś: „mam już makaron", „bez ryb w dniu 2"…',apply:'Zastosuj',fresh2:'Zacznij od nowa',chk:'Automatyczne sprawdzenia',cBud:'Budżet',cAll:'Alergie i wykluczone produkty',cNut:'Odżywianie (orientacyjnie)',cLst:'Lista zakupów zgadza się z przepisami',cPan:'Pominięte na liście (już w domu)',found:'Znaleziono: ',outr:'Poza zakresem: ',miss:'Możliwe braki: ',unus:'Nieużyte w przepisach: ',warnAll:'Alergie: AI może się mylić, a te kontrole tylko porównują słowa. Zawsze czytaj etykiety. Przy poważnej alergii nie polegaj na tej aplikacji.',fbT:'Pomóż nam testować',fbQ:'Czy ten plan był przydatny?',fbC:'Co było nie tak lub czego brakowało?',paid:'Kwota z paragonu, jeśli kupiłeś/aś (PLN)',savef:'Zapisz paragon',savedf:'Zapisano. ',offBy:'Szacunek różnił się o ',offUp:' (realny koszt wyższy)',offDn:' (realny koszt niższy)',copyFb:'Skopiuj opinię, aby wysłać twórcy',fbCopied:'Skopiowano. Wklej w wiadomości do twórcy.',langB:'Ten plan jest w innym języku.',tr:'Przetłumacz plan',forget:'Usuń zapisane dane na tym urządzeniu',forgot:'Dane usunięte.',disc:'Ceny są szacunkami dla typowych dyskontów w Polsce, nie cenami na żywo. To nie jest porada żywieniowa ani medyczna. Zbieramy anonimowe dane o korzystaniu z aplikacji (bez danych osobowych), żeby ją ulepszać. Nie wpisuj w opiniach danych osobowych.',e0:'Podaj budżet co najmniej 10 PLN.',e1:'Planer działa tylko po otwarciu w Claude.',e2:'Nie udzielono zgody.',e3:'Zbyt wiele zapytań. Poczekaj chwilę i spróbuj ponownie.',e4:'Nie udało się stworzyć poprawnego planu. Naciśnij przycisk, aby spróbować ponownie.',e5:'Nie udało się wprowadzić zmiany. Poprzedni plan pozostaje bez zmian.',e6:'Anulowano.',min:'min',dayW:'Dzień',dealsOn:'Planuj z promocjami z tego tygodnia w Lidlu i Biedronce',plusOn:'Mam aplikację Lidl Plus (więcej promocji)',shopT:'Gdzie zrobić zakupy',shopBest:'Najtaniej: ',shopSame:'W obu sklepach wychodzi podobnie',shopS1:'Oszczędzasz ok. ',shopS2:' zł w porównaniu z ',shopDeals:'Pozycji w promocji na liście: ',snap1:'Dane o promocjach: migawka z ',snap2:' (gazetki Lidla i Biedronki przez blix.pl, nieoficjalne). Daty ważności ofert nie są znane, sprawdź w sklepie. Ceny pozostałych produktów to szacunki.',badge:'promocja',cDeal:'Promocje',perMeal:'Średnio ',perMeal2:' zł na posiłek · ',perDay:' zł dziennie',share:'Udostępnij',shared:'Skopiowano'}};
+const L=()=>$('lang').value==='Polski'?'pl':'en';
+const dfmt=x=>x&&/^\d{4}-\d{2}-\d{2}$/.test(x)?x.slice(8,10)+'.'+x.slice(5,7)+'.'+x.slice(0,4):x;
+const inst=n=>L()==='pl'?(n==='Lidl'?'Lidlem':'Biedronką'):n;
+const t=k=>(D[L()][k])||D.en[k]||k;
+const store={get(k){try{return JSON.parse(localStorage.getItem(k)||'null')}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let sample=null,plan=null,prefs=null,busy=false,ctl=null,timer=null,curMsg='',rating=0;
+async function getSample(){if(sample)return sample;try{sample=window.claude&&await window.claude.use('sample')}catch(e){sample=null}return sample}
+getSample();
+
+function bias(){const fb=store.get('bmp_fb2')||[];if(!fb.length)return '';const r=fb.reduce((s,f)=>s+f.actual/f.est,0)/fb.length;const c=Math.min(2,Math.max(0.5,r));return Math.abs(c-1)<0.05?'':'Calibration from real receipts: real costs were on average '+c.toFixed(2)+'x your earlier estimates, so scale your prices accordingly.'}
+const SHAPE_D='{"summary":"one sentence","days":[{"day":1,"meals":[{"type":"Breakfast","recipe_id":"r1"}]}],"recipes":[{"id":"r1","name":"","time_min":15,"servings":1,"ingredients":["200 g rice"],"steps":["..."]}],"grocery":[{"category":"Dairy","items":[{"item":"Mleko UHT Łaciate 3,2%","qty":"2 l","units":2,"unit_price_lidl":2.6,"unit_price_biedronka":2.25}]}],"tips":["..."]}';
+const shape=v=>v&&v.deals?SHAPE_D:SHAPE;
+const SHAPE='{"summary":"one sentence","days":[{"day":1,"meals":[{"type":"Breakfast","recipe_id":"r1"}]}],"recipes":[{"id":"r1","name":"","time_min":15,"servings":1,"ingredients":["200 g rice"],"steps":["..."]}],"grocery":[{"category":"Vegetables","items":[{"item":"Carrots 1 kg","qty":"1 pack","price_pln":3.5}]}],"tips":["..."]}';
+function rules(v){return 'Constraints: total grocery budget '+v.budget+' PLN for the whole plan (must NOT be exceeded); '+v.days+' days; '+v.people+' people; '+v.meals+' meals per day (2 = lunch and dinner; 3 = breakfast, lunch, dinner; 4 = those plus one snack; 5 = those plus two snacks; snacks are small and cheap); diet: '+v.diet+'; max cooking time per meal: '+v.time+'; likes: '+(v.likes||'none')+'; STRICT allergens (never include them, and avoid ready-made products that may contain them such as sauces, stock cubes, bread, sweets): '+(v.allergies||'none')+'; dislikes (avoid): '+(v.dislikes||'none')+'; already owned, do NOT put in the grocery list: '+(v.pantry||'none')+' (plus salt, pepper, cooking oil, water); style: '+(v.batch==='batch'?'batch cooking: a recipe may make several portions; then set servings to the total portions it makes, write ingredient amounts for that many servings and reuse the same recipe id for the meals that use the leftovers':'cook fresh each meal: write ingredient amounts for exactly '+v.people+' person(s) per meal and set servings to '+v.people+', but reuse ingredients across days')+'. Write all text in '+v.lang+'. Use realistic 2026 Polish discount-supermarket prices in PLN for whole packs you must buy. '+bias()+(v.deals?'\n'+dealsBlock(v,DEALS):'')}
+const planPrompt=v=>'You are a practical budget meal planner for a young person in Poland. '+rules(v)+' Use cheap staples. Use at most '+(Number(v.days)+2+(Number(v.meals)>3?2:0))+' distinct recipes (reuse a recipe id when a meal repeats), each with at most 4 short, specific steps that belong to that exact dish. Do not include calorie or nutrition numbers. List each grocery item once with the quantity for the whole plan. At most 3 short tips. Return ONLY valid JSON (no markdown) with exactly this shape: '+shape(v);
+const fixPrompt=(d,v,p)=>'Here is a meal plan as JSON: '+JSON.stringify(d)+'\n'+rules(v)+'\nAutomatic checks found these problems, fix all of them: '+describe(p,v)+' Keep everything else as it is where possible. Return ONLY the full corrected JSON in exactly this shape: '+shape(v);
+const editPrompt=(d,v,req)=>'Here is a meal plan as JSON: '+JSON.stringify(d)+'\n'+rules(v)+'\nApply this change from the user: "'+req+'". Keep everything else as it is where possible, keep recipes and the grocery list consistent, keep the total under budget. Return ONLY the full updated JSON in exactly this shape: '+shape(v);
+
+const norm_=(d,v)=>{try{return(v&&v.deals&&d&&Array.isArray(d.grocery)&&d.grocery.every(c=>Array.isArray(c.items)))?applyShops(d,v,DEALS):d}catch(e){return d}};
+const ENDPOINT=''; // <- wklej adres Google Apps Script (patrz README)
+const UID=(()=>{try{let u=localStorage.getItem('gr_uid');if(!u){u=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Math.random()).slice(2)+Date.now();localStorage.setItem('gr_uid',u)}return u}catch(e){return'anon'}})();
+function track(ev,props){const row=Object.assign({t:new Date().toISOString(),uid:UID,ev:ev,v:'0.1'},props||{});try{const q=JSON.parse(localStorage.getItem('gr_q')||'[]');q.push(row);localStorage.setItem('gr_q',JSON.stringify(q.slice(-200)))}catch(e){}if(ENDPOINT){try{fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(row),keepalive:true})}catch(e){}}}
+const tot2=d=>Math.round(d.grocery.reduce((a,c)=>a+c.items.reduce((b,i)=>b+(Number(i.price_pln)||0),0),0)*100)/100;
+function setBusy(){}
+function fail(msg){const s=$('status');s.className='err';s.textContent=msg}
+function readPrefs(){return{budget:Number($('budget').value)||0,days:$('days').value,people:'1',meals:$('meals').value,diet:$('diet').value,time:'',likes:'',allergies:$('allergies').value.trim(),dislikes:$('dislikes').value.trim(),pantry:$('pantry').value.trim(),batch:'fresh',lang:'Polski',deals:false,plus:false}}
+function persist(){store.set('bmp3',{v:3,prefs:prefs,plan:plan})}
+function setPlan(p,v){plan=Object.assign({},p,{id:Date.now()});prefs=v;persist();rating=0;render()}
+function generate(){const v=readPrefs();if(v.budget<10){fail(t('e0'));return}$('status').textContent='';const p=GrEngine.plan(v);if(p.error){fail(p.error);return}setPlan(p,v);let n=1;try{n=(Number(localStorage.getItem('gr_n'))||0)+1;localStorage.setItem('gr_n',n)}catch(e){}track(n>1?'plan_again':'plan',{n:n,budget:v.budget,days:v.days,meals:v.meals,diet:v.diet,allergies:!!v.allergies,pantry:!!v.pantry,total:tot2(plan),over:!!p.over});$('out').scrollIntoView({behavior:'smooth'})}
+function swapAt(i){const p=GrEngine.swap(plan,prefs,i);setPlan(p,prefs);track('swap',{i:i,total:tot2(plan)})}
+function cheaper(){const tt=tot2(plan),p=GrEngine.plan(Object.assign({},prefs,{budget:Math.max(10,Math.floor(tt*0.85))}));if(p.error)return;setPlan(p,prefs);track('cheaper',{from:tt,to:tot2(plan)})}
+
+function render(){const out=$('out');out.textContent='';if(!plan||!prefs)return;const d=plan,v=prefs,budget=v.budget;
+ const rec={};d.recipes.forEach(r=>rec[r.id]=r);const tt=tot2(d),over=tt>budget;const nPort=Math.max(1,d.days.length*Number(v.meals));const per=t('perMeal')+fmt(tt/nPort).replace(' zł','')+t('perMeal2')+fmt(tt/Math.max(1,d.days.length)).replace(' zł','')+t('perDay');
+ if(v.allergies)out.append(el('div',{class:'banner'},t('warnAll')));
+ if(over){const need=Math.ceil(tt)+2,b=el('button',{class:'ghost',type:'button'},'Ustaw '+need+' zł');b.addEventListener('click',()=>{$('budget').value=need;perDay();generate()});out.append(el('div',{class:'banner'},el('div',{class:'row'},el('span',null,'Dla tych ustawień najtańszy plan, jaki znalazłem, kosztuje ok. '+fmt(tt)+', a Twój budżet to '+fmt(budget)+'. Podnieś budżet, skróć plan albo zaznacz produkty, które już masz w domu.'),b)))}
+ const bar=el('i');bar.style.width=Math.min(100,tt/budget*100)+'%';
+ const ch=el('button',{class:'ghost',type:'button'},t('cheaper'));ch.addEventListener('click',cheaper);
+ const nw=el('button',{class:'ghost',type:'button'},t('fresh2'));nw.addEventListener('click',()=>{plan=null;store.del('bmp3');out.textContent='';window.scrollTo({top:0,behavior:'smooth'})});
+ out.append(el('div',{class:'card'},el('h2',null,t('plan')),el('div',{class:'bar'+(over?' over':'')},bar),el('div',{class:'tot'},el('span',null,t('est'),el('span',{class:'tag'},fmt(tt))),el('span',{class:over?'bad':'ok'},over?t('over')+fmt(tt-budget):fmt(budget-tt)+t('left'))),el('div',{class:'per mt'},per),el('div',{class:'row mt'},ch,nw)));
+ const menu=el('div',{class:'card'},el('h2',null,t('menu')));let k=0;
+ d.days.forEach(dy=>{const box=el('div',{class:'day'},el('b',null,t('dayW')+' '+dy.day));
+  dy.meals.forEach(m=>{const idx=k++,r=rec[m.recipe_id]||{},sw=el('button',{class:'ghost',type:'button'},t('swap'));sw.addEventListener('click',()=>swapAt(idx));
+   const det=el('details',{class:'mdet'},el('summary',null,(m.type||'')+': '+(r.name||'')+(r.time_min?' · '+r.time_min+' '+t('min'):'')),el('div',{class:'muted'},t('ing')),el('ul',null,(r.ingredients||[]).map(x=>el('li',null,x))),el('div',{class:'muted'},t('steps')),el('ol',null,(r.steps||[]).map(x=>el('li',null,x))));
+   det.addEventListener('toggle',()=>{if(det.open)track('recipe_open',{id:m.recipe_id})});
+   box.append(el('div',{class:'meal'},det,sw))});
+  menu.append(box)});out.append(menu);
+ const gl=el('div',{class:'card'});const cp=el('button',{class:'ghost',type:'button'},t('copy')),sh=el('button',{class:'ghost',type:'button'},t('share'));gl.append(el('div',{class:'row'},el('h2',null,t('shop')),el('span',null,sh,' ',cp)));const lines=[];let upd=()=>{},started=false;
+ d.grocery.forEach(c=>{gl.append(el('div',{class:'cat'},c.category||''));
+  c.items.forEach(i=>{const cb=el('input',{type:'checkbox'});const row=el('label',{class:'item'},cb,el('span',{class:'n'},i.item+(i.qty?' ('+i.qty+')':'')),el('span',{class:'p'},fmt(Number(i.price_pln)||0)));
+   cb.addEventListener('change',()=>{row.classList.toggle('done',cb.checked);upd()});gl.append(row);lines.push('- '+i.item+(i.qty?' ('+i.qty+')':'')+' — '+fmt(Number(i.price_pln)||0))})});
+ const nAll=gl.querySelectorAll('input[type=checkbox]').length,pb=el('i'),tk=el('span',{class:'muted'}),sb=el('div',{class:'sticky'},el('div',{class:'row'},tk,el('span',{class:'t'},t('totalL'),el('span',{class:'tag'},fmt(tt)))),el('div',{class:'bar'},pb));gl.append(sb);
+ upd=()=>{const n=gl.querySelectorAll('input[type=checkbox]:checked').length;tk.textContent=t('ticked')+n+t('of')+nAll;pb.style.width=(nAll?n/nAll*100:0)+'%';if(n>0&&!started){started=true;track('list_start',{all:nAll})}if(nAll>0&&n===nAll)track('list_done',{all:nAll})};upd();
+ cp.addEventListener('click',async()=>{let m=t('copied');try{await navigator.clipboard.writeText(lines.join('\n')+'\n\n'+fmt(tt))}catch(x){m=t('cfail')}cp.textContent=m;setTimeout(()=>cp.textContent=t('copy'),1500);track('copy_list')});
+ sh.addEventListener('click',async()=>{const txt='Groszery\n'+lines.join('\n')+'\n\n'+fmt(tt);let m=t('shared');try{if(navigator.share){await navigator.share({title:'Groszery',text:txt});m=t('share')}else{await navigator.clipboard.writeText(txt)}}catch(x){m=t('share')}sh.textContent=m;setTimeout(()=>sh.textContent=t('share'),1500);track('share_list')});out.append(gl);
+ const up=el('button',{class:'ghost'+(rating===1?' sel':''),type:'button'},'👍'),dn=el('button',{class:'ghost'+(rating===-1?' sel':''),type:'button'},'👎');
+ up.addEventListener('click',()=>{rating=1;up.classList.add('sel');dn.classList.remove('sel');track('rating',{r:1})});dn.addEventListener('click',()=>{rating=-1;dn.classList.add('sel');up.classList.remove('sel');track('rating',{r:-1})});
+ const com=el('textarea',{placeholder:t('fbC')}),paid=el('input',{type:'number',min:'1',step:'0.5',placeholder:t('paid')}),sv=el('button',{class:'ghost',type:'button'},t('savef')),res=el('div',{class:'muted mt'});
+ sv.addEventListener('click',()=>{const a=Number(paid.value);if(!(a>0))return;const dv=(a-tt)/tt*100;track('receipt',{est:tt,actual:a,diff_pct:Math.round(dv)});res.textContent=t('savedf')+t('offBy')+Math.abs(dv).toFixed(0)+'%'+(dv>=0?t('offUp'):t('offDn'))});
+ const sd=el('button',{class:'ghost',type:'button'},'Wyślij opinię');sd.addEventListener('click',()=>{track('comment',{r:rating,text:com.value.trim().slice(0,500)});com.value='';res.textContent='Dzięki! Opinia wysłana.'});
+ out.append(el('div',{class:'card'},el('h2',null,t('fbT')),el('p',{class:'muted'},t('fbQ')),el('div',{class:'row'},el('span',null,up,' ',dn)),el('div',{class:'mt'},com),el('div',{class:'inline mt'},paid,sv),res,el('div',{class:'mt'},sd)));
+}
+
+const CHIPS=[['pantry','pchips','pq'],['allergies','achips','aq'],['dislikes','dchips','dq']];
+function buildChips(){CHIPS.forEach(([ik,bk,tk])=>{const box=$(bk),inp=$(ik);if(!box||!inp)return;box.textContent='';const cur=()=>inp.value.split(',').map(x=>x.trim()).filter(Boolean);const same=(x,n)=>x.toLowerCase()===n.toLowerCase();
+ t(tk).split(',').forEach(n=>{const b=el('button',{class:'ghost'+(cur().some(x=>same(x,n))?' sel':''),type:'button'},n);b.addEventListener('click',()=>{let c=cur();c=c.some(x=>same(x,n))?c.filter(x=>!same(x,n)):c.concat(n);inp.value=c.join(', ');buildChips()});box.append(b)})})}
+function buildSeg(){[['days','dayc'],['diet','dietc']].forEach(([sk,bk])=>{const sel=$(sk),box=$(bk);if(!sel||!box)return;box.textContent='';[...sel.options].forEach(o=>{const b=el('button',{class:'ghost'+(sel.value===o.value?' sel':''),type:'button'},o.textContent);b.addEventListener('click',()=>{sel.value=o.value;buildSeg();perDay()});box.append(b)})})}
+function perDay(){const bi=$('budget');bi.style.width=(Math.max(2,String(bi.value).length)+0.5)+'ch';const b=Number(bi.value)||0,n=Number($('days').value)||1;$('perday').textContent=b>0?t('perday')+Math.round(b/n)+t('perday2'):''}
+function applyLang(){buildChips();document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.dataset.i));document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=t(e.dataset.p));document.documentElement.lang=L();document.title=t('title');try{render()}catch(e){}}
+{const a0=applyLang;applyLang=function(){a0();buildSeg();perDay()}}
+$('lang').addEventListener('change',applyLang);$('budget').addEventListener('input',perDay);['pantry','allergies','dislikes'].forEach(k=>$(k).addEventListener('input',buildChips));$('go').addEventListener('click',generate);
+$('forget').addEventListener('click',()=>{store.del('bmp3');store.del('bmp_fb2');plan=null;prefs=null;$('out').textContent='';const s=$('status');s.className='muted';s.textContent=t('forgot')});
+const saved=store.get('bmp3');
+if(saved&&saved.v===3&&saved.prefs){const p=saved.prefs;['budget','days','people','meals','diet','time','likes','allergies','dislikes','pantry','batch','lang'].forEach(k=>{if(p[k]!==undefined&&$(k))$(k).value=p[k]});['deals','plus'].forEach(k=>{if(p[k]!==undefined&&$(k))$(k).checked=!!p[k]});if(saved.plan&&saved.plan.engine===1&&valid(saved.plan)){plan=saved.plan;prefs=p}}
+applyLang();
+})();
+</script>
+</body>
+</html>
