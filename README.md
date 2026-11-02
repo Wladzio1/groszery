@@ -20,3 +20,16 @@ Zdarzenia: `plan`, `plan_again` (drugi i kolejne plany), `swap`, `cheaper`, `rec
 - Zapytaj prawnika o politykę prywatności (RODO), jeśli ruszasz poza kilku znajomych.
 ## 5. Co mierzyć w teście (10 osób, 1 tydzień)
 Wrócili po drugi plan? Zaczęli i skończyli odhaczać listę? Ile wynosi średni błąd ceny względem paragonu? Cel startowy: błąd poniżej 10% i co najmniej połowa osób z drugim planem.
+
+## Zmiany 31.10.2026 (v0.2)
+- Formularz działa jak kreator: jedno pytanie na ekranie (8 kroków: budżet, dni, posiłki dziennie, dieta, alergie, lubię, nie lubię, w domu). Wracający użytkownik widzi zapisane ustawienia i przycisk "Ułóż nowy plan".
+- Nowa funkcja "Ratuj lodówkę": produkty, które się psują, zamieniane na przepisy (baza: 43 produkty, 32 przepisy; nieznane produkty są zgłaszane jako brakujące w bazie).
+- Przepisy przepisane (więcej smaku: koncentrat, cytryna, curry, wędzona papryka, sos sojowy, śmietana, techniki smażenia). Zakładamy, że w domu jest sól, pieprz, oregano i słodka papryka; reszta przypraw jest liczona w koszcie.
+- Nowe zdarzenia pomiarowe: step (wejście na krok), rescue_open, rescue, rescue_to_plan.
+
+## Aktualizacja istniejącej wersji (bez zakładania nowego repo i nowej usługi)
+1. Wejdź w to samo repozytorium na GitHubie. Wgraj nowe pliki na stare: Add file > Upload files, przeciągnij zawartość folderu `groszery` (w tym folder `icons`), zatwierdź (Commit changes). Albo w terminalu: skopiuj pliki do sklonowanego repo, potem `git add .`, `git commit -m "v0.2"`, `git push`.
+2. Usuń z repo stare pliki, których nie ma w paczce (jeśli były).
+3. Render sam wdroży zmianę po commicie (Auto-Deploy). Sprawdź w panelu Render zakładkę Events, czy wdrożenie przeszło. Adres strony się nie zmienia.
+4. Jeśli stara usługa na Render nie jest typu Static Site (np. Web Service), załóż nową jako Static Site na tym samym repo (Publish Directory: `.`), a starą usuń.
+5. Po wdrożeniu odśwież stronę na telefonie wymuszając przeładowanie (zamknij kartę i otwórz ponownie). Stare ustawienia z przeglądarki są wczytywane, a plany z poprzedniej wersji są ignorowane.
