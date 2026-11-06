@@ -33,3 +33,16 @@ Wrócili po drugi plan? Zaczęli i skończyli odhaczać listę? Ile wynosi śred
 3. Render sam wdroży zmianę po commicie (Auto-Deploy). Sprawdź w panelu Render zakładkę Events, czy wdrożenie przeszło. Adres strony się nie zmienia.
 4. Jeśli stara usługa na Render nie jest typu Static Site (np. Web Service), załóż nową jako Static Site na tym samym repo (Publish Directory: `.`), a starą usuń.
 5. Po wdrożeniu odśwież stronę na telefonie wymuszając przeładowanie (zamknij kartę i otwórz ponownie). Stare ustawienia z przeglądarki są wczytywane, a plany z poprzedniej wersji są ignorowane.
+
+## Zmiany 02.11.2026 (v0.3)
+- Rotacja posiłków: to samo danie ani ten sam „typ” dania (np. makaron) nie występuje dwa razy tego samego dnia, a w tym samym miejscu dnia (np. śniadanie) nie powtarza się dzień po dniu. Testy: 0 powtórzeń śniadania dzień po dniu, 0 dni z dwoma daniami z makaronem.
+- „Zrób taniej” zawsze daje tańszy plan albo komunikat, że taniej się nie da (testy: 0 przypadków droższego planu).
+- Nowy krok 4 w kreatorze: styl gotowania. „Meal prep” gotuje raz na 2-3 porcje (obiad i kolacja na zmianę), pokazuje kartę „Kiedy gotujesz”, przelicza składniki i oznacza resztki do odgrzania. Przechowywanie w lodówce: do 2-3 dni zależnie od dania.
+- Silnik: plan.mode ('fresh' lub 'prep'), plan.sessions, meal.cook/k/from/until; wersja zapisu planu 2 (starsze plany są ignorowane).
+- Minimalne koszty po zaostrzeniu rotacji (ceny szacunkowe): świeże gotowanie 3 dni ok. 88 zł, 5 dni ok. 120 zł, 7 dni ok. 155 zł; meal prep 3 dni ok. 70 zł, 5 dni ok. 88 zł, 7 dni ok. 113 zł. (Wartości zastąpione przez wersję 0.4 poniżej.)
+
+## Zmiany 04.11.2026 (v0.4)
+- Baza: 50 przepisów (12 śniadań, 30 obiadów i kolacji, 8 przekąsek) i 46 produktów. Nowe, polskie w stylu dania: pomidorowa z ryżem, kopytka, leniwe, kasza gryczana z pieczarkami, leczo, fasolka po bretońsku, zupa jarzynowa, kapusta duszona, zapiekanka ziemniaczana, omlety, kurczak w sosie śmietanowo-pieczarkowym, placki z cukinii, naleśniki wytrawne.
+- Ceny porównane z publicznymi źródłami z 2026 r.: jajka (zakres GUS) bez zmian; masło 200 g obniżone z 8,50 na 5,50 zł (cena regularna w sieciach 4,99-5,99 zł); ser żółty 150 g 6,30 zł; olej 9,50 zł; pierś z kurczaka 20 zł/kg (widełki 14-25 zł/kg, niepewne). Pozostałe ok. 35 pozycji nadal wymaga sprawdzenia w sklepie.
+- Minimalne koszty (ceny szacunkowe): świeże gotowanie 3 dni ok. 70 zł, 5 dni ok. 96 zł, 7 dni ok. 123 zł; meal prep 58, 72 i 98 zł. Domyślny budżet w aplikacji: 80 zł.
+- Testy po zmianie: 0 powtórzeń dania w jednym dniu, 0 powtórzeń typu dania dzień po dniu, 0 przecieków alergenów/diet, Zrób taniej: 70 z 72 tańszych, 2 bez opcji, 0 droższych.
