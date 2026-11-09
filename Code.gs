@@ -1,4 +1,6 @@
 // Google Apps Script: wklej do Arkusza Google (Rozszerzenia > Apps Script), wdróż jako Aplikację internetową (dostęp: Każdy).
+// Pozwala sprawdzić w przeglądarce, że skrypt działa (otwórz adres /exec).
+function doGet(){return ContentService.createTextOutput('Groszery działa')}
 function doPost(e){var sh=SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];var d={};try{d=JSON.parse(e.postData.contents)}catch(x){}
  sh.appendRow([d.t||new Date().toISOString(),d.uid||'',d.ev||'',JSON.stringify(d)]);return ContentService.createTextOutput('ok')}
 // Uruchom ręcznie (Uruchom > summary), żeby zobaczyć podsumowanie w zakładce "Podsumowanie".

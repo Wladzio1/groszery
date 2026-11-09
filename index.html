@@ -367,7 +367,7 @@ const fixPrompt=(d,v,p)=>'Here is a meal plan as JSON: '+JSON.stringify(d)+'\n'+
 const editPrompt=(d,v,req)=>'Here is a meal plan as JSON: '+JSON.stringify(d)+'\n'+rules(v)+'\nApply this change from the user: "'+req+'". Keep everything else as it is where possible, keep recipes and the grocery list consistent, keep the total under budget. Return ONLY the full updated JSON in exactly this shape: '+shape(v);
 
 const norm_=(d,v)=>{try{return(v&&v.deals&&d&&Array.isArray(d.grocery)&&d.grocery.every(c=>Array.isArray(c.items)))?applyShops(d,v,DEALS):d}catch(e){return d}};
-const ENDPOINT=''; // <- wklej adres Google Apps Script (patrz README)
+const ENDPOINT='https://script.google.com/macros/s/AKfycbw2Fe2HqB740-mFA6IQgAOCU3ur_mLy6rPpjR-VSI3wyxBHldZR0fC5e6wzJkRb8njg/exec'; // adres skryptu Google Apps Script zbierającego pomiary
 const UID=(()=>{try{let u=localStorage.getItem('gr_uid');if(!u){u=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Math.random()).slice(2)+Date.now();localStorage.setItem('gr_uid',u)}return u}catch(e){return'anon'}})();
 function track(ev,props){const row=Object.assign({t:new Date().toISOString(),uid:UID,ev:ev,v:'0.1'},props||{});try{const q=JSON.parse(localStorage.getItem('gr_q')||'[]');q.push(row);localStorage.setItem('gr_q',JSON.stringify(q.slice(-200)))}catch(e){}if(ENDPOINT){try{fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(row),keepalive:true})}catch(e){}}}
 const tot2=d=>Math.round(d.grocery.reduce((a,c)=>a+c.items.reduce((b,i)=>b+(Number(i.price_pln)||0),0),0)*100)/100;

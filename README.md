@@ -11,7 +11,7 @@ Aplikacja to statyczna strona (jeden plik `index.html`). Plany układa program z
 ## 3. Pomiary (Arkusz Google)
 1. Utwórz pusty Arkusz Google. Rozszerzenia > Apps Script > wklej `Code.gs`.
 2. Wdróż > Nowe wdrożenie > Aplikacja internetowa > Wykonuj jako: Ja, Dostęp: Każdy. Skopiuj adres URL.
-3. W `index.template.html` wpisz ten adres w `const ENDPOINT=''` i uruchom `python3 build.py` (albo poproś mnie o to). Wrzuć na GitHub.
+3. Adres jest już wpisany w `index.template.html` (stała ENDPOINT) i zbudowany w `index.html`. Jeśli zmienisz adres, uruchom `python3 build.py` i wrzuć pliki na GitHub.
 4. Wyniki: zakładka z surowymi zdarzeniami + funkcja `summary` (Uruchom) tworzy zakładkę "Podsumowanie".
 Zdarzenia: `plan`, `plan_again` (drugi i kolejne plany), `swap`, `cheaper`, `recipe_open`, `list_start`, `list_done`, `copy_list`, `share_list`, `rating`, `receipt` (szacunek kontra paragon), `comment`. Użytkownik ma anonimowy identyfikator z przeglądarki, bez danych osobowych.
 ## 4. Zanim zaprosisz ludzi
